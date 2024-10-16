@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { removeDupes } from './utils'
 import loader from './loader.gif'
 
-const pageSize = 20
+const pageSize = 50
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -17,18 +17,24 @@ function App() {
       .finally(() => setLoading(false))
   }, [])
 
-  const renderMovies = arr => arr.map(movie => (
+  const chooseStar = fav => fav
+    ? <span className="star-full">&#9733;</span>
+    : <span className="star-empty">&#9734;</span>
+
+  const renderMovie = movie => (
     <div key={movie.id} className="movie">
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
-      <p>{movie.title}</p>
-      <p><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</p>
-
-      <span className="star-empty">&#9734;</span>
-      <span className="star-black">&#9733;</span>
+      <div className="space-between">
+        <span><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</span>
+        {chooseStar(Math.random() < 0.5)}
+      </div>
+      <p className="title">{movie.title}</p>
+      <span className="date">{new Date(movie.release_date).toLocaleDateString("sr-RS")}</span>
     </div>
-  ))
+  )
 
-  const currentMovies = movies.slice(0, pageSize)
+  const sorted = movies.sort((a, b) => b.ratings[0].rating - a.ratings[0].rating)
+  const currentMovies = sorted.slice(0, pageSize)
 
   if (loading) return <img src={loader} alt="loading" />
 
@@ -38,7 +44,7 @@ function App() {
         <h1>Movie Database</h1>
       </header>
       <main className="movies">
-        {renderMovies(currentMovies)}
+        {currentMovies.map(renderMovie)}
       </main>
     </div>
   );

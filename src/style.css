@@ -39,10 +39,24 @@ img {
 
 .star-empty {
   font-size:28px;
-  color: rgb(87, 153, 239);
+  color: #5799EF;
 }
 
-.star-black {
+.star-full {
   font-size:28px;
-  color: rgb(87, 153, 239);
+  color: #5799EF;
+}
+
+.title {
+  height: 40px;
+  overflow: hidden;
+}
+
+.date {
+  color: #aaa;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
 }
