@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import loader from './loader.gif'
 
 function removeDupes(arr) {
   const ids = new Set()
@@ -13,19 +14,13 @@ function removeDupes(arr) {
 }
 
 function App() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [movies, setMovies] = useState([])
-  const [currentMovies, setCurrentMovies] = useState([])
 
   useEffect(() => {
-    setLoading(true)
     fetch('/movies.json')
       .then(res => res.json())
-      .then(data => {
-        const filtered = removeDupes(data)
-        setMovies(filtered)
-        setCurrentMovies(filtered.slice(0, 20))
-      })
+      .then(data => setMovies(removeDupes(data)))
       .catch(err => console.error(err))
       .finally(() => setLoading(false))
   }, [])
@@ -41,16 +36,17 @@ function App() {
     </div>
   ))
 
+  const currentMovies = movies.slice(0, 20)
+
+  if (loading) return <img src={loader} alt="loading" />
+
   return (
     <div className="wrapper">
       <header>
         <h1>Movie Database</h1>
       </header>
       <main className="movies">
-        {loading
-          ? '...loading'
-          : renderMovies(currentMovies)
-        }
+        {renderMovies(currentMovies)}
       </main>
     </div>
   );
