@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import Favorite from './components/Favorite'
 import { removeDupes } from './utils'
 import loader from './loader.gif'
 
@@ -17,16 +18,16 @@ function App() {
       .finally(() => setLoading(false))
   }, [])
 
-  const chooseStar = fav => fav
-    ? <span className="star-full">&#9733;</span>
-    : <span className="star-empty">&#9734;</span>
+  const toggleFavorite = id => {
+    console.log('toggleFavorite ' + id)
+  }
 
   const renderMovie = movie => (
     <div key={movie.id} className="movie">
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <div className="space-between">
         <span><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</span>
-        {chooseStar(Math.random() < 0.5)}
+        <Favorite inFavorites={Math.random() < 0.5} onClick={() => toggleFavorite(movie.id)} />
       </div>
       <p className="title">{movie.title}</p>
       <span className="date">{new Date(movie.release_date).toLocaleDateString("sr-RS")}</span>
@@ -47,7 +48,7 @@ function App() {
         {currentMovies.map(renderMovie)}
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
