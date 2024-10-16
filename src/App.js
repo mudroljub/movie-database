@@ -9,6 +9,10 @@ const pageSize = 50
 function App() {
   const [loading, setLoading] = useState(true)
   const [movies, setMovies] = useState([])
+  const [favorites, setFavorites] = useState(localStorage.getItem('favorites')
+    ? new Set(JSON.parse(localStorage.getItem('favorites'))) 
+    : new Set()
+  )
 
   useEffect(() => {
     fetch('/movies.json')
@@ -19,7 +23,15 @@ function App() {
   }, [])
 
   const toggleFavorite = id => {
-    console.log('toggleFavorite ' + id)
+    const newFavorites = new Set(favorites)
+
+    if (newFavorites.has(id))
+      newFavorites.delete(id)
+    else
+      newFavorites.add(id)
+
+    setFavorites(newFavorites)
+    localStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)))
   }
 
   const renderMovie = movie => (
@@ -27,7 +39,7 @@ function App() {
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <div className="space-between">
         <span><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</span>
-        <Favorite inFavorites={Math.random() < 0.5} onClick={() => toggleFavorite(movie.id)} />
+        <Favorite inFavorites={favorites.has(movie.id)} onClick={() => toggleFavorite(movie.id)} />
       </div>
       <p className="title">{movie.title}</p>
       <span className="date">{new Date(movie.release_date).toLocaleDateString("sr-RS")}</span>
