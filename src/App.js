@@ -1,17 +1,9 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+
+import { removeDupes } from './utils'
 import loader from './loader.gif'
 
-function removeDupes(arr) {
-  const ids = new Set()
-  return arr.filter(obj => {
-    if (!ids.has(obj.id)) {
-      ids.add(obj.id)
-      return true
-    }
-    return false
-  })
-}
+const pageSize = 20
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -27,7 +19,7 @@ function App() {
 
   const renderMovies = arr => arr.map(movie => (
     <div key={movie.id} className="movie">
-      <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} />
+      <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <p>{movie.title}</p>
       <p><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</p>
 
@@ -36,7 +28,7 @@ function App() {
     </div>
   ))
 
-  const currentMovies = movies.slice(0, 20)
+  const currentMovies = movies.slice(0, pageSize)
 
   if (loading) return <img src={loader} alt="loading" />
 

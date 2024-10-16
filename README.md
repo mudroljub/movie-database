@@ -8,7 +8,7 @@ npm start
 
 ## TODO
 
-- Filter duplicated movies from the response
+- Filter duplicated movies from the response ✓
 - Sort movies by imdb rating
 - Render all filtered & sorted movies in grid view
 - Each rendered movie item should display title, poster, release date and

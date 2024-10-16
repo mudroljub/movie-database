@@ -1,7 +1,10 @@
 body {
+  margin: 0;
   background-color: black;
   font-family: Roboto,Helvetica,Arial,sans-serif;
   color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 img {
@@ -36,9 +39,10 @@ img {
 
 .star-empty {
   font-size:28px;
+  color: rgb(87, 153, 239);
 }
 
 .star-black {
   font-size:28px;
-  color: #222;
+  color: rgb(87, 153, 239);
 }
