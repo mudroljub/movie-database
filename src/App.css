@@ -2,3 +2,34 @@ img {
   max-width: 100%;
 }
 
+.wrapper {
+  width: 80%;
+  margin: auto;
+}
+
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.movie {
+  width: 200px;
+}
+
+.movie img {
+  height: 300px;
+}
+
+.star-yellow {
+  font-size:28px;
+  color:#f5c518;
+}
+
+.star-empty {
+  font-size:28px;
+}
+
+.star-black {
+  font-size:28px;
+  color: #222;
+}
