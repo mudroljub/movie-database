@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [loading, setLoading] = useState(false)
+  const [movies, setMovies] = useState([])
+
+  useEffect(() => {
+    setLoading(true)
+    fetch('/movies.json')
+      .then(res => res.json())
+      .then(setMovies)
+      .finally(() => setLoading(false))
+  }, [])
+
+  console.log(movies)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="wrapper">
+      <header>
+        <h1>Movie Database</h1>
       </header>
+      <main>
+        {loading
+          ? '...loading'
+          : 'filmovi'
+        }
+      </main>
     </div>
   );
 }
