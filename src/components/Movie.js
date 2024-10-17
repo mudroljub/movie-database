@@ -1,10 +1,12 @@
+import React, { forwardRef } from 'react'
+
 const favStyle = {
   background: 'transparent',
   border: 0,
   cursor: 'pointer',
 }
 
-const Movie = ({ movie, focused, inFavorites, toggleFavorite }) => {
+const Movie = ({ movie, inFavorites, toggleFavorite }, ref) => {
 
   const star = inFavorites
     ? <span className="star-full">&#9733;</span>
@@ -15,7 +17,11 @@ const Movie = ({ movie, focused, inFavorites, toggleFavorite }) => {
     : 'Add to favorites'
 
   return (
-    <div tabIndex="0" className="movie" style={{ background: focused ? 'lightblue' : '#1A1A1A' }}>
+    <div
+      ref={ref}
+      tabIndex="0"
+      className="movie"
+    >
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <div className="space-between">
         <span><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</span>
@@ -29,4 +35,4 @@ const Movie = ({ movie, focused, inFavorites, toggleFavorite }) => {
   )
 }
 
-export default Movie
+export default forwardRef(Movie)

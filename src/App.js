@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import Movie from './components/Movie'
 import { removeDupes } from './utils'
@@ -13,7 +13,8 @@ function App() {
     ? new Set(JSON.parse(localStorage.getItem('favorites')))
     : new Set()
   )
-  const [focusedIndex, setFocusedIndex] = useState(-1)
+  const [focusedIndex, setFocusedIndex] = useState(0)
+  const itemRefs = useRef([])
 
   useEffect(() => {
     fetch('/movies.json')
@@ -41,10 +42,14 @@ function App() {
   const handleKeyDown = e => {
     if (e.key === 'ArrowRight' || (e.key === 'Tab' && !e.shiftKey)) {
       e.preventDefault()
-      setFocusedIndex((prevIndex) => (prevIndex + 1) % currentMovies.length)
+      const nextIndex = (focusedIndex + 1) % itemRefs.current.length
+      setFocusedIndex(nextIndex)
+      itemRefs.current[nextIndex].focus()
     } else if (e.key === 'ArrowLeft' || (e.key === 'Tab' && e.shiftKey)) {
       e.preventDefault()
-      setFocusedIndex((prevIndex) => (prevIndex - 1 + currentMovies.length) % currentMovies.length)
+      const prevIndex = (focusedIndex - 1 + itemRefs.current.length) % itemRefs.current.length
+      setFocusedIndex(prevIndex)
+      itemRefs.current[prevIndex].focus()
     }
   }
 
@@ -56,13 +61,13 @@ function App() {
         <h1>Movie Database</h1>
       </header>
       <main className="movies" onKeyDown={handleKeyDown}>
-        {currentMovies.map((movie, index) => (
+        {currentMovies.map((movie, i) => (
           <Movie
             key={movie.id}
+            ref={el => (itemRefs.current[i] = el)}
             movie={movie}
             inFavorites={favorites.has(movie.id)}
             toggleFavorite={toggleFavorite}
-            focused={focusedIndex === index}
           />
         ))}
       </main>
