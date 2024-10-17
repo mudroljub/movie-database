@@ -6,13 +6,25 @@ const favStyle = {
   cursor: 'pointer',
 }
 
-const Movie = ({ movie, inFavorites, toggleFavorite }, ref) => {
+const Movie = ({ movie, favorites, setFavorites }, ref) => {
 
-  const star = inFavorites
+  const toggleFavorite = id => {
+    const newFavorites = new Set(favorites)
+
+    if (newFavorites.has(id))
+      newFavorites.delete(id)
+    else
+      newFavorites.add(id)
+
+    setFavorites(newFavorites)
+    localStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)))
+  }
+
+  const star = favorites.has(movie.id)
     ? <span className="star-full">&#9733;</span>
     : <span className="star-empty">&#9734;</span>
 
-  const title = inFavorites
+  const title = favorites.has(movie.id)
     ? 'Remove from favorites'
     : 'Add to favorites'
 

@@ -24,18 +24,6 @@ function App() {
       .finally(() => setLoading(false))
   }, [])
 
-  const toggleFavorite = id => {
-    const newFavorites = new Set(favorites)
-
-    if (newFavorites.has(id))
-      newFavorites.delete(id)
-    else
-      newFavorites.add(id)
-
-    setFavorites(newFavorites)
-    localStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)))
-  }
-
   const sorted = movies.sort((a, b) => b.ratings[0].rating - a.ratings[0].rating)
   const currentMovies = sorted.slice(0, pageSize)
 
@@ -66,8 +54,8 @@ function App() {
             key={movie.id}
             ref={el => (itemRefs.current[i] = el)}
             movie={movie}
-            inFavorites={favorites.has(movie.id)}
-            toggleFavorite={toggleFavorite}
+            favorites={favorites}
+            setFavorites={setFavorites}
           />
         ))}
       </main>
