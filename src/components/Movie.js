@@ -36,7 +36,9 @@ const Movie = ({ movie, favorites, setFavorites }, ref) => {
     >
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <div className="space-between">
-        <span><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</span>
+        <span title="IMDB rating">
+          <span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}
+        </span>
         <span style={favStyle} onClick={() => toggleFavorite(movie.id)} title={title}>
           {star}
         </span>
