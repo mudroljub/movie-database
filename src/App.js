@@ -24,6 +24,11 @@ function App() {
       .finally(() => setLoading(false))
   }, [])
 
+  useEffect(() => {
+    if (itemRefs.current.length)
+      itemRefs.current[0].focus()
+  }, [movies])
+
   const sorted = movies.sort((a, b) => b.ratings[0].rating - a.ratings[0].rating)
   const currentMovies = sorted.slice(0, pageSize)
 
