@@ -5,6 +5,7 @@ import { removeDupes } from './utils'
 import loader from './loader.gif'
 
 const pageSize = 50
+const currentPage = 0
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -30,7 +31,7 @@ function App() {
   }, [movies])
 
   const sorted = movies.sort((a, b) => b.ratings[0].rating - a.ratings[0].rating)
-  const currentMovies = sorted.slice(0, pageSize)
+  const currentMovies = sorted.slice(currentPage * pageSize, currentPage * pageSize + pageSize)
 
   const handleKeyDown = e => {
     if (e.key === 'ArrowRight' || (e.key === 'Tab' && !e.shiftKey)) {
@@ -51,7 +52,8 @@ function App() {
   return (
     <div className="wrapper">
       <header>
-        <h1>Movie Database</h1>
+        <img src="/logo.png" alt="logo" height={100} />
+        <h1 className="site-title">Movie Database</h1>
       </header>
       <main className="movies" onKeyDown={handleKeyDown}>
         {currentMovies.map((movie, i) => (

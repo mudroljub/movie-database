@@ -15,7 +15,8 @@ npm start
 - Enable keyboard navigation ✓
   - set autoFocus on first ✓
 - Highlight selected item ✓
-- On Enter key add item to favorites / or remove when it is already in favorite
-- You should set screen size to 1280x720 via Chrome dev tools to see the proper UI
-  - check mobile
+- On Enter key add item to favorites / or remove when it is already in favorite ✓
+- You should set screen size to 1280 x 720 via Chrome dev tools to see the proper UI ✓
+  - check mobile ✓
 - Add Load more button (or Pagination)
+- Dodati search

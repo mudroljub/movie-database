@@ -11,6 +11,13 @@ img {
   max-width: 100%;
 }
 
+.site-title {
+  display: inline-block;
+  font-size: 42px;
+  vertical-align: top;
+  margin-left: 20px;
+}
+
 .wrapper {
   width: 84%;
   margin: auto;
