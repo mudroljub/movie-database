@@ -4,7 +4,7 @@ const favStyle = {
   cursor: 'pointer',
 }
 
-const Movie = ({ movie, inFavorites, toggleFavorite }) => {
+const Movie = ({ movie, focused, inFavorites, toggleFavorite }) => {
 
   const star = inFavorites
     ? <span className="star-full">&#9733;</span>
@@ -15,13 +15,13 @@ const Movie = ({ movie, inFavorites, toggleFavorite }) => {
     : 'Add to favorites'
 
   return (
-    <div key={movie.id} className="movie">
+    <div tabIndex="0" className="movie" style={{ background: focused ? 'lightblue' : '#1A1A1A' }}>
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <div className="space-between">
         <span><span className="star-yellow">&#9733;</span> {movie.ratings[0].rating}</span>
-        <button style={favStyle} onClick={() => toggleFavorite(movie.id)} title={title}>
+        <span style={favStyle} onClick={() => toggleFavorite(movie.id)} title={title}>
           {star}
-        </button>
+        </span>
       </div>
       <p className="title">{movie.title}</p>
       <span className="date">{new Date(movie.release_date).toLocaleDateString("sr-RS")}</span>
