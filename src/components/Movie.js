@@ -28,11 +28,16 @@ const Movie = ({ movie, favorites, setFavorites }, ref) => {
     ? 'Remove from favorites'
     : 'Add to favorites'
 
+  const handleEnter = (e, id) => {
+    if (e.key === 'Enter') toggleFavorite(id)
+  }
+
   return (
     <div
       ref={ref}
       tabIndex="0"
       className="movie"
+      onKeyDown={e => handleEnter(e, movie.id)}
     >
       <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="poster" />
       <div className="space-between">
