@@ -21,4 +21,4 @@ npm start
 
 BONUS:
 - Add Pagination ✓
-- Implement search
+- Implement search ✓
