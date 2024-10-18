@@ -53,9 +53,12 @@ function App() {
 
   return (
     <div className="wrapper">
-      <header>
-        <img src="/logo.png" alt="logo" height={100} />
-        <h1 className="site-title">Movie Database</h1>
+      <header className="space-between">
+        <div>
+          <img src="/logo.png" alt="logo" height={100} />
+          <h1 className="site-title">Movie Database</h1>
+        </div>
+        <input type="search" className="search" placeholder="Search Movie Database" />
       </header>
 
       <main className="movies" onKeyDown={handleKeyDown}>

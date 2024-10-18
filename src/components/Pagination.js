@@ -16,7 +16,7 @@ const Pagination = ({ data, pageSize, currentPage, setCurrentPage }) => {
   }
 
   return (
-    <div style={{ marginTop: 24 }}>
+    <div style={{ marginTop: 8 }}>
       {pageNumbers.map(num => (
         <button
           key={num}
