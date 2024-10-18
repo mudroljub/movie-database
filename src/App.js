@@ -1,21 +1,21 @@
 import { useEffect, useState, useRef } from 'react'
 
 import Movie from './components/Movie'
+import Pagination from './components/Pagination'
 import { removeDupes } from './utils'
 import loader from './loader.gif'
 
-const pageSize = 50
-const currentPage = 0
+const pageSize = 60
 
 function App() {
+  const itemRefs = useRef([])
   const [loading, setLoading] = useState(true)
   const [movies, setMovies] = useState([])
-  const [favorites, setFavorites] = useState(localStorage.getItem('favorites')
-    ? new Set(JSON.parse(localStorage.getItem('favorites')))
-    : new Set()
+  const [favorites, setFavorites] = useState(
+    new Set(JSON.parse(localStorage.getItem('favorites') || '[]'))
   )
   const [focusedIndex, setFocusedIndex] = useState(0)
-  const itemRefs = useRef([])
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     fetch('/movies.json')
@@ -31,7 +31,9 @@ function App() {
   }, [movies])
 
   const sorted = movies.sort((a, b) => b.ratings[0].rating - a.ratings[0].rating)
-  const currentMovies = sorted.slice(currentPage * pageSize, currentPage * pageSize + pageSize)
+
+  const endIndex = currentPage * pageSize
+  const currentMovies = sorted.slice(endIndex - pageSize, endIndex)
 
   const handleKeyDown = e => {
     if (e.key === 'ArrowRight' || (e.key === 'Tab' && !e.shiftKey)) {
@@ -55,6 +57,7 @@ function App() {
         <img src="/logo.png" alt="logo" height={100} />
         <h1 className="site-title">Movie Database</h1>
       </header>
+
       <main className="movies" onKeyDown={handleKeyDown}>
         {currentMovies.map((movie, i) => (
           <Movie
@@ -66,6 +69,13 @@ function App() {
           />
         ))}
       </main>
+
+      <Pagination
+        data={sorted}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   )
 }
